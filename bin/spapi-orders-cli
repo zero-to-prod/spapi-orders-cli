@@ -2,12 +2,12 @@
 <?php
 
 use Symfony\Component\Console\Application;
-use Zerotoprod\:namespace\:namespace;
+use Zerotoprod\SpapiOrdersCli\SpapiOrdersCli;
 
 require getcwd().'/vendor/autoload.php';
 
 $Application = (new Application());
 
-:namespace::register($Application);
+SpapiOrdersCli::register($Application);
 
 $Application->run();
