@@ -41,8 +41,8 @@ class GetOrderItemsCommand extends Command
 
         $rdt_response = SpapiTokens::createRestrictedDataToken(
             $response['response']['access_token'],
-            '/orders/v0/orders/'.$Args->order_id.'/orderItems',
-            [],
+            "/orders/v0/orders/$Args->order_id/orderItems",
+            ['buyerInfo'],
             $Args->targetApplication,
             user_agent: $Options->user_agent,
         );
