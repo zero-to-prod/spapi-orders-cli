@@ -1,6 +1,6 @@
 <?php
 
-namespace Zerotoprod\SpapiOrdersCli\GetOrderItems;
+namespace Zerotoprod\SpapiOrdersCli\GetOrderBuyerInfo;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -13,17 +13,17 @@ use Zerotoprod\SpapiOrders\SpapiOrders;
 use Zerotoprod\SpapiTokens\SpapiTokens;
 
 #[AsCommand(
-    name: GetOrderItemsCommand::signature,
-    description: 'Get an Order Items.'
+    name: GetOrderBuyerInfoCommand::signature,
+    description: 'Get an Order Buyer Info.'
 )]
-class GetOrderItemsCommand extends Command
+class GetOrderBuyerInfoCommand extends Command
 {
-    public const signature = 'spapi-orders-cli:get-order-items';
+    public const signature = 'spapi-orders-cli:get-order-buyer-info';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $Args = GetOrderItemsArguments::from($input->getArguments());
-        $Options = GetOrderItemsOptions::from($input->getOptions());
+        $Args = GetOrderBuyerInfoArguments::from($input->getArguments());
+        $Options = GetOrderBuyerInfoOptions::from($input->getOptions());
 
         $response = SpapiLwa::refreshToken(
             'https://api.amazon.com/auth/o2/token',
@@ -41,8 +41,8 @@ class GetOrderItemsCommand extends Command
 
         $rdt_response = SpapiTokens::createRestrictedDataToken(
             $response['response']['access_token'],
-            "/orders/v0/orders/$Args->order_id/orderItems",
-            ['buyerInfo'],
+            "/orders/v0/orders/$Args->order_id/buyerInfo",
+            [],
             $Args->targetApplication,
             user_agent: $Options->user_agent,
         );
@@ -53,7 +53,7 @@ class GetOrderItemsCommand extends Command
             return Command::SUCCESS;
         }
 
-        $order_response = SpapiOrders::getOrderItems(
+        $order_response = SpapiOrders::getOrderBuyerInfo(
             'https://sellingpartnerapi-na.amazon.com',
             $rdt_response['response']['restrictedDataToken'],
             $Args->order_id,
@@ -67,13 +67,13 @@ class GetOrderItemsCommand extends Command
 
     public function configure(): void
     {
-        $this->addArgument(GetOrderItemsArguments::refresh_token, InputArgument::REQUIRED, 'The LWA refresh token');
-        $this->addArgument(GetOrderItemsArguments::client_id, InputArgument::REQUIRED, 'Get this value when you register your application');
-        $this->addArgument(GetOrderItemsArguments::client_secret, InputArgument::REQUIRED, 'Get this value when you register your application');
-        $this->addArgument(GetOrderItemsArguments::targetApplication, InputArgument::REQUIRED, 'The application ID for the target application to which access is being delegated.');
-        $this->addArgument(GetOrderItemsArguments::order_id, InputArgument::REQUIRED, 'The Amazon Order ID');
-        $this->addOption(GetOrderItemsOptions::user_agent, mode: InputOption::VALUE_OPTIONAL, description: 'User Agent');
-        $this->addOption(GetOrderItemsOptions::response, mode: InputOption::VALUE_NONE, description: 'Returns the full response');
-        $this->addOption(GetOrderItemsOptions::expiresIn, mode: InputOption::VALUE_NONE, description: 'The expiresIn value for the restrictedDataToken');
+        $this->addArgument(GetOrderBuyerInfoArguments::refresh_token, InputArgument::REQUIRED, 'The LWA refresh token');
+        $this->addArgument(GetOrderBuyerInfoArguments::client_id, InputArgument::REQUIRED, 'Get this value when you register your application');
+        $this->addArgument(GetOrderBuyerInfoArguments::client_secret, InputArgument::REQUIRED, 'Get this value when you register your application');
+        $this->addArgument(GetOrderBuyerInfoArguments::targetApplication, InputArgument::REQUIRED, 'The application ID for the target application to which access is being delegated.');
+        $this->addArgument(GetOrderBuyerInfoArguments::order_id, InputArgument::REQUIRED, 'The Amazon Order ID');
+        $this->addOption(GetOrderBuyerInfoOptions::user_agent, mode: InputOption::VALUE_OPTIONAL, description: 'User Agent');
+        $this->addOption(GetOrderBuyerInfoOptions::response, mode: InputOption::VALUE_NONE, description: 'Returns the full response');
+        $this->addOption(GetOrderBuyerInfoOptions::expiresIn, mode: InputOption::VALUE_NONE, description: 'The expiresIn value for the restrictedDataToken');
     }
 }
