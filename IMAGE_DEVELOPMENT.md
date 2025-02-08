@@ -24,7 +24,7 @@ This project provides a convenient `dh` (Docker Hub) script to simplify image de
 Before starting development, verify that your `.env` file contains the correct settings.
 
 ```dotenv
-DOCKER_IMAGE=davidsmith3/:slug
+DOCKER_IMAGE=davidsmith3/spapi-orders-cli
 DOCKER_IMAGE_TAG=latest
 ```
 
