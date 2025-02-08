@@ -14,11 +14,11 @@ use Zerotoprod\SpapiTokens\SpapiTokens;
 
 #[AsCommand(
     name: GetOrderItemsCommand::signature,
-    description: 'Get an Order.'
+    description: 'Get an Order Items.'
 )]
 class GetOrderItemsCommand extends Command
 {
-    public const signature = 'spapi-orders-cli:get-order';
+    public const signature = 'spapi-orders-cli:get-order-items';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -41,8 +41,8 @@ class GetOrderItemsCommand extends Command
 
         $rdt_response = SpapiTokens::createRestrictedDataToken(
             $response['response']['access_token'],
-            '/orders/v0/orders/'.$Args->order_id,
-            ['buyerInfo', 'shippingAddress'],
+            '/orders/v0/orders/'.$Args->order_id.'/orderItems',
+            [],
             $Args->targetApplication,
             user_agent: $Options->user_agent,
         );
