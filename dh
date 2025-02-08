@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -f .env ]; then
+  export $(cat .env | grep -v '#' | awk '/=/ {print $1}')
+fi
+
+if [ -z "$DOCKER_IMAGE" ]; then
+  echo "DOCKER_IMAGE is not set in the .env file"
+  exit 1
+fi
+
+if [ -z "$DOCKER_IMAGE_TAG" ]; then
+  echo "DOCKER_IMAGE_TAG is not set in the .env file"
+  exit 1
+fi
+
+usage() {
+  cat <<EOF
+Usage: $0 <command> [options]
+
+Commands:
+  run        Run the image in a container.
+  build      Build the image.
+  push       Push the latest image to Docker Hub.
+EOF
+  exit 1
+}
+
+if [ "$#" -lt 1 ]; then
+  usage
+fi
+
+case "$1" in
+  run)
+    shift
+    docker run --rm "$DOCKER_IMAGE" "$@"
+  ;;
+  build)
+    docker buildx build --platform linux/amd64,linux/arm64 -t "$DOCKER_IMAGE:$DOCKER_IMAGE_TAG" --load .
+  ;;
+  push)
+    docker push "$DOCKER_IMAGE:$DOCKER_IMAGE_TAG"
+  ;;
+esac

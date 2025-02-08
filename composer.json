@@ -1,0 +1,56 @@
+{
+  "name": "zero-to-prod/:slug",
+  "description": ":description",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "zero-to-prod",
+    ":slug"
+  ],
+  "readme": "./README.md",
+  "time": ":time",
+  "authors": [
+    {
+      "name": "David Smith",
+      "email": "dave0016@gmail.com",
+      "homepage": "https://davidsmith.blog/",
+      "role": "maintainer"
+    }
+  ],
+  "homepage": "https://github.com/zero-to-prod/:slug",
+  "support": {
+    "email": "dave0016@gmail.com",
+    "issues": "https://github.com/zero-to-prod/:slug/issues",
+    "source": "https://github.com/zero-to-prod/:slug",
+    "docs": "https://zero-to-prod.github.io/:slug/",
+    "security": "https://github.com/zero-to-prod/:slug/blob/main/SECURITY.md"
+  },
+  "funding": [
+    {
+      "type": "GitHub",
+      "url": "https://github.com/sponsors/zero-to-prod"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*",
+    "symfony/console": "^7.2",
+    "zero-to-prod/data-model": "^81.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Zerotoprod\\:namespace\\": "src/"
+    }
+  },
+  "bin": [
+    "bin/:slug"
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "<12.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  }
+}
