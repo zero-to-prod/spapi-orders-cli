@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use Zerotoprod\SpapiOrdersCli\SpapiOrdersCli;
+
+require getcwd().'/vendor/autoload.php';
+
+$Application = (new Application());
+
+SpapiOrdersCli::register($Application);
+
+$Application->run();
