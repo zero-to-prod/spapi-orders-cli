@@ -4,6 +4,7 @@ namespace Zerotoprod\SpapiOrdersCli;
 
 use Symfony\Component\Console\Application;
 use Zerotoprod\SpapiOrdersCli\GetOrder\GetOrderCommand;
+use Zerotoprod\SpapiOrdersCli\GetOrderAddress\GetOrderAddressCommand;
 use Zerotoprod\SpapiOrdersCli\GetOrderBuyerInfo\GetOrderBuyerInfoCommand;
 use Zerotoprod\SpapiOrdersCli\GetOrderItems\GetOrderItemsCommand;
 use Zerotoprod\SpapiOrdersCli\Src\SrcCommand;
@@ -16,5 +17,6 @@ class SpapiOrdersCli
         $Application->add(new GetOrderCommand());
         $Application->add(new GetOrderItemsCommand());
         $Application->add(new GetOrderBuyerInfoCommand());
+        $Application->add(new GetOrderAddressCommand());
     }
 }
