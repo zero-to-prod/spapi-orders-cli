@@ -44,8 +44,6 @@ jobs:
           tags: |
             davidsmith3/spapi-orders-cli:latest
             davidsmith3/spapi-orders-cli:${{ env.VERSION }}
-          cache-from: type=registry,ref=davidsmith3/spapi-orders-cli:buildcache
-          cache-to: type=registry,ref=davidsmith3/spapi-orders-cli:buildcache,mode=max
           build-args: |
             NODE_ENV=production
           labels: |
