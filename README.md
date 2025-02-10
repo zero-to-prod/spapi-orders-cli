@@ -4,6 +4,7 @@
 
 [![Repo](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/zero-to-prod/spapi-orders-cli)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/spapi-orders-cli/test.yml?label=test)](https://github.com/zero-to-prod/spapi-orders-cli/actions)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/spapi-orders-cli/backwards_compatibility.yml?label=backwards_compatibility)](https://github.com/zero-to-prod/spapi-orders-cli/actions)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/spapi-orders-cli/build_docker_image.yml?label=build_docker_image)](https://github.com/zero-to-prod/spapi-orders-cli/actions)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/zero-to-prod/spapi-orders-cli?color=blue)](https://packagist.org/packages/zero-to-prod/spapi-orders-cli/stats)
 [![php](https://img.shields.io/packagist/php-v/zero-to-prod/spapi-orders-cli.svg?color=purple)](https://packagist.org/packages/zero-to-prod/spapi-orders-cli/stats)
