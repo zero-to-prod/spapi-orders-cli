@@ -12,12 +12,18 @@ use Zerotoprod\SpapiLwa\SpapiLwa;
 use Zerotoprod\SpapiOrders\SpapiOrders;
 use Zerotoprod\SpapiTokens\SpapiTokens;
 
+/**
+ * @link https://github.com/zero-to-prod/spapi-orders-cli
+ */
 #[AsCommand(
     name: GetOrderCommand::signature,
     description: 'Get an Order.'
 )]
 class GetOrderCommand extends Command
 {
+    /**
+     * @link https://github.com/zero-to-prod/spapi-orders-cli
+     */
     public const signature = 'spapi-orders-cli:get-order';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -65,6 +71,9 @@ class GetOrderCommand extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @link https://github.com/zero-to-prod/spapi-orders-cli
+     */
     public function configure(): void
     {
         $this->addArgument(GetOrderArguments::refresh_token, InputArgument::REQUIRED, 'The LWA refresh token');
