@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zerotoprod\SpapiLwa\SpapiLwa;
 use Zerotoprod\SpapiOrders\SpapiOrders;
+use Zerotoprod\SpapiRdt\SpapiRdt;
 use Zerotoprod\SpapiTokens\SpapiTokens;
 
 /**
@@ -31,13 +32,12 @@ class GetOrderAddressCommand extends Command
         $Args = GetOrderAddressArguments::from($input->getArguments());
         $Options = GetOrderAddressOptions::from($input->getOptions());
 
-        $response = SpapiLwa::refreshToken(
-            'https://api.amazon.com/auth/o2/token',
-            $Args->refresh_token,
+        $response = SpapiLwa::from(
             $Args->client_id,
             $Args->client_secret,
+            'https://api.amazon.com/auth/o2/token',
             $Options->user_agent
-        );
+        )->refreshToken($Args->refresh_token);
 
         if ($response['info']['http_code'] !== 200) {
             $output->writeln(json_encode($response, JSON_PRETTY_PRINT));
@@ -45,13 +45,15 @@ class GetOrderAddressCommand extends Command
             return Command::SUCCESS;
         }
 
-        $rdt_response = SpapiTokens::createRestrictedDataToken(
-            $response['response']['access_token'],
-            "/orders/v0/orders/$Args->order_id/address",
-            [],
-            $Args->targetApplication,
-            user_agent: $Options->user_agent,
-        );
+        $rdt_response = SpapiRdt::from(
+            SpapiTokens::from(
+                $response['response']['access_token'],
+                $Args->targetApplication,
+                user_agent: $Options->user_agent,
+            )
+        )
+            ->orders()
+            ->getOrderAddress($Args->order_id);
 
         if ($rdt_response['info']['http_code'] !== 200) {
             $output->writeln(json_encode($rdt_response, JSON_PRETTY_PRINT));
@@ -59,14 +61,16 @@ class GetOrderAddressCommand extends Command
             return Command::SUCCESS;
         }
 
-        $order_response = SpapiOrders::getOrderAddress(
-            'https://sellingpartnerapi-na.amazon.com',
-            $rdt_response['response']['restrictedDataToken'],
-            $Args->order_id,
-            $Options->user_agent
+        $output->writeln(
+            json_encode(
+                SpapiOrders::from(
+                    $rdt_response['response']['restrictedDataToken'],
+                    'https://sellingpartnerapi-na.amazon.com',
+                    $Options->user_agent
+                )->getOrderAddress($Args->order_id),
+                JSON_PRETTY_PRINT
+            )
         );
-
-        $output->writeln(json_encode($order_response, JSON_PRETTY_PRINT));
 
         return Command::SUCCESS;
     }
